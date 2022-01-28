@@ -1,4 +1,12 @@
-import { Controller, Get, Param, Post, Put, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Body,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import {
   FindStudentResponseDto,
   StudentResponseDto,
@@ -18,7 +26,7 @@ export class StudentController {
 
   @Get('/:studentId')
   getStudentById(
-    @Param('studentId') studentId: string,
+    @Param('studentId', ParseUUIDPipe) studentId: string,
   ): FindStudentResponseDto {
     return this.studentService.getStudentById(studentId);
   }
@@ -30,7 +38,7 @@ export class StudentController {
 
   @Put('/:studentId')
   editStudent(
-    @Param('StudentId') studentId: string,
+    @Param('studentId', ParseUUIDPipe) studentId: string,
     @Body() body: UpdateStudentDto,
   ): StudentResponseDto {
     return this.studentService.editStudent(studentId, body);

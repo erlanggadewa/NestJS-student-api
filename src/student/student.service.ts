@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { nanoid } from 'nanoid';
 import { students } from 'src/db';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   CreateStudentDto,
@@ -22,7 +22,7 @@ export class StudentService {
   }
 
   createStudent(payload: CreateStudentDto): StudentResponseDto {
-    const newStudent = { id: nanoid(), ...payload };
+    const newStudent = { id: uuidv4(), ...payload };
     this.students.push(newStudent);
     return newStudent;
   }
@@ -35,7 +35,7 @@ export class StudentService {
     const updatedStudentList = this.students.map((student) => {
       if (student.id === studentId) {
         updatedStudent = {
-          id: studentId,
+          ...student,
           ...payload,
         };
         return updatedStudent;
@@ -61,7 +61,7 @@ export class StudentService {
 
     const updatedStudentsList = students.map((student) => {
       if (student.id === studentId && student.teacherId === teacherId) {
-        editedStudent = { id: studentId, ...payload };
+        editedStudent = { ...student, ...payload };
         return editedStudent;
       } else return student;
     });
