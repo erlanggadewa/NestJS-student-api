@@ -4,11 +4,13 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
-import { ValidStudentMiddleware } from 'src/middleware/validStudent.middleware';
+import { ValidStudentMiddleware } from 'src/common/middleware/validStudent.middleware';
+import { PrismaService } from 'src/common/prisma/prisma.service';
 import { StudentController } from './student.controller';
 import { StudentService } from './student.service';
 
 @Module({
+  imports: [PrismaService],
   exports: [StudentService],
   controllers: [StudentController],
   providers: [StudentService],
